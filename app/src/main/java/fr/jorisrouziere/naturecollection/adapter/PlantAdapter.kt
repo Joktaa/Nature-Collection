@@ -1,17 +1,28 @@
 package fr.jorisrouziere.naturecollection.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import fr.jorisrouziere.naturecollection.MainActivity
+import fr.jorisrouziere.naturecollection.PlantModel
 import fr.jorisrouziere.naturecollection.R
 
-class PlantAdapter(private val layoutId: Int) : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
+class PlantAdapter(private val context: MainActivity,
+                   private val plantList: List<PlantModel>,
+                   private val layoutId: Int
+                ) : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
 
-    // boite à composant à controler
+    // boite de tous les composant à controler
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val plantImage = view.findViewById<ImageView>(R.id.image_item)
+        val plantName: TextView? = view.findViewById(R.id.name_item)
+        val plantDescription: TextView? = view.findViewById<TextView>(R.id.description_item)
+        val starIcon = view.findViewById<ImageView>(R.id.star_icon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,8 +32,19 @@ class PlantAdapter(private val layoutId: Int) : RecyclerView.Adapter<PlantAdapte
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return plantList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {}
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentPlant = plantList[position]
+
+        Glide.with(context).load(Uri.parse(currentPlant.imageUrl)).into(holder.plantImage)
+        holder.plantName?.text = currentPlant.name
+        holder.plantDescription?.text = currentPlant.description
+        if(currentPlant.liked) {
+            holder.starIcon.setImageResource(R.drawable.ic_like)
+        } else {
+            holder.starIcon.setImageResource(R.drawable.ic_unlike)
+        }
+    }
 }
