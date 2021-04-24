@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import fr.jorisrouziere.naturecollection.MainActivity
 import fr.jorisrouziere.naturecollection.PlantModel
+import fr.jorisrouziere.naturecollection.PlanteRepository
 import fr.jorisrouziere.naturecollection.R
 
 class PlantAdapter(private val context: MainActivity,
@@ -37,6 +38,7 @@ class PlantAdapter(private val context: MainActivity,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentPlant = plantList[position]
+        val repo = PlanteRepository()
 
         Glide.with(context).load(Uri.parse(currentPlant.imageUrl)).into(holder.plantImage)
         holder.plantName?.text = currentPlant.name
@@ -45,6 +47,14 @@ class PlantAdapter(private val context: MainActivity,
             holder.starIcon.setImageResource(R.drawable.ic_like)
         } else {
             holder.starIcon.setImageResource(R.drawable.ic_unlike)
+        }
+
+        // ajouter une interaction sur l'étoile
+        holder.starIcon.setOnClickListener {
+            currentPlant.liked = !currentPlant.liked
+
+            // maj
+            repo.updatePlant(currentPlant)
         }
     }
 }
