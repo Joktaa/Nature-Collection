@@ -2,7 +2,7 @@
     <string name="app_name">Nature Emoi</string>
 
     <!-- Page d'accueil -->
-    <string name="home_page_title">A découvrir</string>
+    <string name="home_page_title">À découvrir</string>
     <string name="home_page_last_plant_section">Dernières plantes</string>
 
     <!-- Page de collection -->
