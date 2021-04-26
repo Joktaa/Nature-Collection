@@ -19,7 +19,6 @@ class PlanteRepository {
         // absorber les données de la BDD dans la liste
         Singleton.databaseRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -45,5 +44,10 @@ class PlanteRepository {
     // MAJ
     fun updatePlant(plant: PlantModel) {
         Singleton.databaseRef.child(plant.id).setValue(plant)
+    }
+
+    // Delete
+    fun deletePlant(plant: PlantModel) {
+        Singleton.databaseRef.child(plant.id).removeValue()
     }
 }

@@ -8,12 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import fr.jorisrouziere.naturecollection.MainActivity
-import fr.jorisrouziere.naturecollection.PlantModel
-import fr.jorisrouziere.naturecollection.PlanteRepository
-import fr.jorisrouziere.naturecollection.R
+import fr.jorisrouziere.naturecollection.*
 
-class PlantAdapter(private val context: MainActivity,
+class PlantAdapter(val context: MainActivity,
                    private val plantList: List<PlantModel>,
                    private val layoutId: Int
                 ) : RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
@@ -55,6 +52,12 @@ class PlantAdapter(private val context: MainActivity,
 
             // maj
             repo.updatePlant(currentPlant)
+            }
+
+        // interaction lors du clique sur une plante
+        holder.itemView.setOnClickListener {
+            //afficher la popup
+            PlantPopup(this, currentPlant).show()
         }
     }
 }
